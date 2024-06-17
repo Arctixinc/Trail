@@ -66,8 +66,8 @@ your_username = f"{your_first_name_normalized}.{your_last_name_normalized}{rando
 
 your_birthday = "02 3 1989" # dd m yyyy
 your_gender = "1"  # 1:F 2:M 3:Not say 4:Custom
-your_password = os.getenv('GMAIL_PASSWORD', 'default_password')
-
+#your_password = os.getenv('GMAIL_PASSWORD', 'default_password')
+your_password = "x,nscldsj123...FDKZ"
 def fill_form(driver):
     try:
         driver.get("https://accounts.google.com/signup/v2/createaccount?flowName=GlifWebSignIn&flowEntry=SignUp")
