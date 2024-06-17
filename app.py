@@ -1,20 +1,28 @@
+import os
+import random
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-import random
-import time
 from unidecode import unidecode
-import os
+import chromedriver_autoinstaller
+
+# Automatically download and install chromedriver
+chromedriver_autoinstaller.install()
 
 # Chrome options
 chrome_options = ChromeOptions()
 chrome_options.add_argument("--disable-infobars")
+chrome_options.add_argument("--headless")  # Run headless if needed
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
 
 # WebDriver service
-service = ChromeService(executable_path=os.path.join(os.getcwd(), 'chromedriver.exe'))
+service = ChromeService()
+
 driver = webdriver.Chrome(options=chrome_options, service=service)
 
 french_first_names = [
@@ -50,16 +58,15 @@ your_last_name = random.choice(french_last_names)
 # Generate a random number
 random_number = random.randint(1000, 9999)
 
-# Retirer les accents des prénoms et nom de famille
+# Remove accents from first and last names
 your_first_name_normalized = unidecode(your_first_name).lower()
 your_last_name_normalized = unidecode(your_last_name).lower()
 
 your_username = f"{your_first_name_normalized}.{your_last_name_normalized}{random_number}"
 
-your_birthday = "02 3 1989" #dd m yyyy exp : 24 11 2003
-your_gender = "2" # 1:F 2:M 3:Not say 4:Custom
-your_password = "x,nscldsj123...FDKZ"
-#your_password = os.getenv('GMAIL_PASSWORD', 'tom$89130)
+your_birthday = "02 3 1989" # dd m yyyy
+your_gender = "1"  # 1:F 2:M 3:Not say 4:Custom
+your_password = os.getenv('GMAIL_PASSWORD', 'default_password')
 
 def fill_form(driver):
     try:
@@ -113,9 +120,7 @@ def fill_form(driver):
         password_field = wait.until(EC.visibility_of_element_located((By.NAME, "Passwd")))
         password_field.clear()
         password_field.send_keys(your_password)
-        # Locate the parent div element with the ID "confirm-passwd"
         confirm_passwd_div = driver.find_element(By.ID, "confirm-passwd")
-        # Find the input field inside the parent div
         password_confirmation_field = confirm_passwd_div.find_element(By.NAME, "PasswdAgain")
         password_confirmation_field.clear()
         password_confirmation_field.send_keys(your_password)
