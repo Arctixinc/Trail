@@ -58,7 +58,8 @@ your_username = f"{your_first_name_normalized}.{your_last_name_normalized}{rando
 
 your_birthday = "02 3 1989" #dd m yyyy exp : 24 11 2003
 your_gender = "2" # 1:F 2:M 3:Not say 4:Custom
-your_password = os.getenv('GMAIL_PASSWORD', 'tom$89130)
+your_password = "x,nscldsj123...FDKZ"
+#your_password = os.getenv('GMAIL_PASSWORD', 'tom$89130)
 
 def fill_form(driver):
     try:
